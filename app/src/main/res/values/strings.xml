@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">mp3Editor</string>
+    <string name="sdcard_readonly">Sorry, the SD Card is mounted as read-only and Ringdroid requires it to be writable.</string>
+    <string name="alert_title_failure">Error</string>
+    <string name="alert_ok_button">OK</string>
+    <string name="sdcard_shared">Sorry, can\'t run while your handset is mounted as a USB device.</string>
+    <string name="no_sdcard">Sorry, can\'t run unless you have an SD Card inserted.</string>
+    <string name="button_options">Options</string>
 </resources>
