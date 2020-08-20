@@ -48,7 +48,7 @@
         </LinearLayout>
 
         <TextView android:id="@+id/row_title"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:singleLine="true"
             android:shadowColor="#999999"
