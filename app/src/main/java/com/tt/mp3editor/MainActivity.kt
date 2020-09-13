@@ -2,11 +2,13 @@ package com.tt.mp3editor
 
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -38,8 +40,22 @@ class MainActivity : AppCompatActivity() {
     private fun activateRecyclerView(){
         val my_list = getAllAudioFromDevice(this)
         mp3_list_recyclerView.layoutManager = LinearLayoutManager(this)
-        mp3_list_recyclerView.adapter = MP3Adapter(my_list,this)
+        mp3_list_recyclerView.adapter = MP3Adapter(
+            items = my_list,
+            context = this,
+            onClickListener = {view, audioModel -> openActivity(view,audioModel) })
     }
+
+    private fun openActivity(view: View, audioModel: AudioModel) {
+        val musicID = audioModel.path
+
+        val intent = Intent(this@MainActivity, EditMP3::class.java)
+        intent.putExtra("path",musicID)
+        startActivity(intent)
+        finish()
+
+    }
+
 
     private fun setupPermissions() {
         val permission = ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -88,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         var tempAudioModel = ArrayList<AudioModel>()
         val selection:String = MediaStore.Audio.Media.IS_MUSIC + " !=0"
         val uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(MediaStore.Audio.AudioColumns.DATA,
+        val projection = arrayOf(MediaStore.Audio.AudioColumns._ID,
                                                 MediaStore.Audio.AudioColumns.TITLE,
                                                 MediaStore.Audio.AudioColumns.ALBUM,
                                                 MediaStore.Audio.AudioColumns.ARTIST)
